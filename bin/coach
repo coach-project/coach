@@ -7,5 +7,9 @@ use Coach\Command;
 use Symfony\Component\Console\Application;
 
 $application = new Application('Coach', '0.1-dev');
+
 $application->add(new Command\GreetCommand());
+$application->add(new Command\LicenseCommand());
+$application->add(new Command\VersionCommand());
+
 $application->run();
