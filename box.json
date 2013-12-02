@@ -1,0 +1,19 @@
+{
+    "chmod": "0755",
+    "directories": [
+        "src"
+    ],
+    "files": [
+        "LICENSE"
+    ],
+    "finder": [
+        {
+            "name": "*.php",
+            "in": "vendor"
+        }
+    ],
+    "git-version": "package_version",
+    "main": "bin/coach",
+    "output": "coach.phar",
+    "stub": true
+}

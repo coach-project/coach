@@ -1,0 +1,9 @@
+{
+    "name": "Peoples Lab",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/neerajsohal/coach.git",
+        "branch": "master"
+    },
+    "install-dir": "/Users/neerajkumar/lab/tmp/"
+}

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "cb92e1d5f48b596ff997edef47de5bcb",
+    "hash": "73e2a72a13c585a47cef1cb77472f4fd",
     "packages": [
         {
             "name": "illuminate/filesystem",
@@ -103,47 +103,6 @@
                 }
             ],
             "time": "2013-11-27 16:10:48"
-        },
-        {
-            "name": "ornicar/php-git-repo",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ornicar/php-git-repo.git",
-                "reference": "dfcd5c4684c0c2beb56453132c2adc019868e71d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ornicar/php-git-repo/zipball/dfcd5c4684c0c2beb56453132c2adc019868e71d",
-                "reference": "dfcd5c4684c0c2beb56453132c2adc019868e71d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "PHPGit_": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Thibault Duplessis",
-                    "email": "thibault.duplessis@gmail.com",
-                    "homepage": "http://ornicar.github.com"
-                }
-            ],
-            "description": "An object oriented wrapper to run any Git command",
-            "homepage": "https://github.com/ornicar/php-git-repo",
-            "keywords": [
-                "git"
-            ],
-            "time": "2013-01-14 19:43:05"
         },
         {
             "name": "seld/jsonlint",
@@ -1140,8 +1099,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "illuminate/filesystem": 20,
-        "ornicar/php-git-repo": 20
+        "illuminate/filesystem": 20
     },
     "platform": {
         "php": ">=5.3.2"

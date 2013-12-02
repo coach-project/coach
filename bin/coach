@@ -11,5 +11,6 @@ $application = new Application('Coach', '0.1-dev');
 $application->add(new Command\GreetCommand());
 $application->add(new Command\LicenseCommand());
 $application->add(new Command\VersionCommand());
+$application->add(new Command\InstallCommand());
 
 $application->run();
