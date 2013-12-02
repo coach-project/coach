@@ -1,18 +1,31 @@
 {
+    "alias": "coach.phar",
     "chmod": "0755",
-    "directories": [
-        "src"
+    "compactors": [
+        "Herrera\\Box\\Compactor\\Json",
+        "Herrera\\Box\\Compactor\\Php"
     ],
+    "directories": ["src"],
     "files": [
         "LICENSE"
     ],
     "finder": [
         {
             "name": "*.php",
+            "exclude": [
+                "File",
+                "mikey179",
+                "Net",
+                "phpunit",
+                "phpunit-test-case",
+                "Tester",
+                "Tests",
+                "tests"
+            ],
             "in": "vendor"
         }
     ],
-    "git-version": "package_version",
+    
     "main": "bin/coach",
     "output": "coach.phar",
     "stub": true

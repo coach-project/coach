@@ -23,9 +23,9 @@ class InstallCommand extends Command
     	
     	/* get config file */
         $fs = new Filesystem;
-        $config = json_decode($fs->get('.coach.json'));
+        $config = json_decode($fs->get('.coach.json'), true);
 
         $git = new Git;
-        $git->cloneRepository($config->repository->url, $config->repository->branch, realpath('../../'));
+        $git->cloneRepository($config['repository']['url'], $config['repository']['branch'], $config['install-dir']);
     }
 }
