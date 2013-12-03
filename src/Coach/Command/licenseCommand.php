@@ -5,8 +5,8 @@ namespace Coach\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Coach\Coach;
 
-use Illuminate\Filesystem\Filesystem;
 
 class LicenseCommand extends Command
 {
@@ -18,8 +18,9 @@ class LicenseCommand extends Command
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-    	$filesystem = new Filesystem;
-        $output->writeln($filesystem->get('LICENSE'));
+    	
+    	$coach = new Coach;
+    	$output->writeln($coach->getLicense());
 
     }
 }
