@@ -1,5 +1,36 @@
 vendor/
 
+#ecplise
+.project
+*.pydevproject
+.metadata
+.gradle
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+# TeXlipse plugin
+.texlipse
+ ecl
+
 #MACOSX
 .DS_Store
 .AppleDouble
@@ -17,6 +48,6 @@ Icon
 .Trashes
 
 #phars 
-
 coach.phar
 box.phar
+

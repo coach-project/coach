@@ -1,9 +1,29 @@
 {
-    "name": "Peoples Lab",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/neerajsohal/coach.git",
-        "branch": "master"
-    },
-    "install-dir": "/Users/neerajkumar/lab/tmp/"
+	"name": "Sample Project",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/neerajsohal/coach.git",
+		"branch": "master"
+	},
+	"install-dir": "/Users/neerajkumar/lab/tmp/",
+	"targets": [
+		{
+			"type": "ssh",
+			"username": "user",
+			"password": "password",
+			"address": "192.168.1.347",
+			"port": 22
+		},
+		{
+			"type": "ssh",
+			"username": "user",
+			"password": "password",
+			"address": "192.168.1.348",
+			"port": 22
+		},
+		{
+			"type": "local",
+			"path": "/Users/neerajkumar/lab/tmp/testCoach/",
+		},
+	]
 }

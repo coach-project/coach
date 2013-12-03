@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Illuminate\Filesystem\Filesystem;
 
-use Coach\Git\Git;
+use Coach\Scm;
 
 class InstallCommand extends Command
 {
