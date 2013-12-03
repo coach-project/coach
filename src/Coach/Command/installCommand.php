@@ -9,6 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Filesystem\Filesystem;
 
 use Coach\Scm;
+use Coach\Coach;
 
 class InstallCommand extends Command
 {
@@ -21,11 +22,10 @@ class InstallCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output) {
     	
-    	/* get config file */
-        $fs = new Filesystem;
-        $config = json_decode($fs->get('.coach.json'), true);
-
-        $git = new Git;
+    	$coach = new Coach($output);
+    	$coach->install();
+        /*$git = new Git;
         $git->cloneRepository($config['repository']['url'], $config['repository']['branch'], $config['install-dir']);
+        */
     }
 }

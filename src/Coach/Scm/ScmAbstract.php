@@ -2,7 +2,7 @@
 
 namespace Coach\Scm;
 
-abstract ScmAbstract {
+abstract class ScmAbstract {
 	
 	public function check();
 	
