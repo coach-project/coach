@@ -1,5 +1,5 @@
 {
-    "name": "neerajsohal/coach",
+    "name": "coach/coach",
     "description": "Tool for Deploying PHP apps",
     "require": {
         "php": ">=5.3.2",
@@ -8,13 +8,14 @@
         "illuminate/filesystem": "dev-master"
     },
     "require-dev": {
-        "kherge/box": "~2.0"
+        
     },
     "license": "MIT",
     "authors": [
         {
             "name": "neerajsohal",
-            "email": "hello@neerajkumar.name"
+            "email": "hello@neerajkumar.name",
+            "homepage": "http://www.neerajkumar.name"
         }
     ],
     "minimum-stability": "dev",
