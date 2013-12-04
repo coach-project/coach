@@ -12,10 +12,14 @@ use Coach\Scm\Scm;
 use Coach\Scm\Git\Git;
 use Net;
 
+/* set default timezone to utc */
+date_default_timezone_set("UTC");
+
 class Coach {
 	
 	private $config;
 	private $output;
+	private $ssh;
 	
 	public function __construct(OutputInterface $output) {
 		$this->output = $output;
@@ -25,6 +29,7 @@ class Coach {
 		
 	}
 	
+	/* load configuration adn set up all variables etc. like server settings, git repos etc */
 	private function prepareSystem() {
 		
 		if($this->output->isVerbose()) {
@@ -53,7 +58,6 @@ class Coach {
 
 	public function install() {
 		$this->prepareSystem();
-		date_default_timezone_set("UTC");
 		$ssh = new \Net_SSH2($this->config['targets'][0]['address']);
 		
 		if (!$ssh->login($this->config['targets'][0]['username'], $this->config['targets'][0]['password'])) { //if you can't log on...
