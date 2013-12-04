@@ -2,14 +2,8 @@
 
 namespace Coach\Scm\Git;
 
-class Git extends ScmAbstract {
+use Coach\Scm\ScmInterface;
 
-	public function cloneRepository($url) {
-		return "git clone " . $url;
-	}
-
-	public function checkout($branch) {
-		return "git checkout " . $branch;
-	}
-
+class Git implements ScmInterface {
+	
 }

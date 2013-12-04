@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b8e07b84524695120ff9c4a02de754d6",
+    "hash": "3e21138559077aa77e2c1b9d906b3640",
     "packages": [
         {
             "name": "illuminate/filesystem",
@@ -60,12 +60,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "924303bbb0dc80c628635050a83c877cf30e53f6"
+                "reference": "cf4647139cb42edcba4933f175101b96df7d27ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/924303bbb0dc80c628635050a83c877cf30e53f6",
-                "reference": "924303bbb0dc80c628635050a83c877cf30e53f6",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/cf4647139cb42edcba4933f175101b96df7d27ef",
+                "reference": "cf4647139cb42edcba4933f175101b96df7d27ef",
                 "shasum": ""
             },
             "require": {
@@ -102,7 +102,100 @@
                     "role": "Developer"
                 }
             ],
-            "time": "2013-12-02 19:06:44"
+            "time": "2013-12-03 16:44:31"
+        },
+        {
+            "name": "phpseclib/phpseclib",
+            "version": "dev-php5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpseclib/phpseclib.git",
+                "reference": "9dd34025e1ad57109fccbf8f34114dfee094f3c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/9dd34025e1ad57109fccbf8f34114dfee094f3c1",
+                "reference": "9dd34025e1ad57109fccbf8f34114dfee094f3c1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "squizlabs/php_codesniffer": "1.*"
+            },
+            "suggest": {
+                "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations.",
+                "ext-mcrypt": "Install the Mcrypt extension in order to speed up a wide variety of cryptographic operations."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Crypt": "phpseclib/",
+                    "File": "phpseclib/",
+                    "Math": "phpseclib/",
+                    "Net": "phpseclib/"
+                },
+                "files": [
+                    "phpseclib/Crypt/Random.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "phpseclib/"
+            ],
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Wigginton",
+                    "email": "terrafrost@php.net",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Patrick Monnerat",
+                    "email": "pm@datasphere.ch",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Andreas Fischer",
+                    "email": "bantu@phpbb.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Hans-Jürgen Petrich",
+                    "email": "petrich@tronic-media.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Secure Communications Library - Pure-PHP implementations of RSA, AES, SSH2, SFTP, X.509 etc.",
+            "homepage": "http://phpseclib.sourceforge.net",
+            "keywords": [
+                "BigInteger",
+                "aes",
+                "asn.1",
+                "asn1",
+                "blowfish",
+                "crypto",
+                "cryptography",
+                "encryption",
+                "rsa",
+                "security",
+                "sftp",
+                "signature",
+                "signing",
+                "ssh",
+                "twofish",
+                "x.509",
+                "x509"
+            ],
+            "time": "2013-12-03 20:39:23"
         },
         {
             "name": "seld/jsonlint",
@@ -260,7 +353,8 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "illuminate/filesystem": 20
+        "illuminate/filesystem": 20,
+        "phpseclib/phpseclib": 20
     },
     "platform": {
         "php": ">=5.3.2"

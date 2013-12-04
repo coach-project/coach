@@ -51,3 +51,6 @@ Icon
 coach.phar
 box.phar
 
+#coach json
+.coach.json
+

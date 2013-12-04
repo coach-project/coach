@@ -24,6 +24,7 @@ class InstallCommand extends Command
     	
     	$coach = new Coach($output);
     	$coach->install();
+    	
         /*$git = new Git;
         $git->cloneRepository($config['repository']['url'], $config['repository']['branch'], $config['install-dir']);
         */
