@@ -11,6 +11,8 @@ use Symfony\Component\Console\Output\Output;
 use Coach\Scm\Scm;
 use Coach\Scm\Git\Git;
 use Net;
+use Crypt;
+use Illuminate;
 
 /* set default timezone to utc */
 date_default_timezone_set("UTC");
@@ -58,14 +60,21 @@ class Coach {
 
 	public function install() {
 		$this->prepareSystem();
-		$ssh = new \Net_SSH2($this->config['targets'][0]['address']);
+		$ssh = new \Net_SSH2($this->config['nodes'][0]['address']);
+		$key = new \Crypt_RSA();
+		$fs = new Filesystem();
+		$key->loadKey($fs->get($this->config['nodes'][0]['key']));
+		$this->output->writeln($ssh->getLog());
 		
-		if (!$ssh->login($this->config['targets'][0]['username'], $this->config['targets'][0]['password'])) { //if you can't log on...
+		if (!$ssh->login($this->config['nodes'][0]['username'], $key)) { //if you can't log on...
 			$this->output->writeln('Login Failed');
 		}
 		
 		$this->output->writeln($ssh->getLog());
-		$this->output->writeln($ssh->exec("ls"));
+		$this->output->writeln("inside Server");
+		
+		$this->output->writeln($ssh->exec("ls -al"));
+		$this->output->writeln($ssh->getLog());
 		
 	}
 	
