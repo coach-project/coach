@@ -6,7 +6,10 @@
         "symfony/console": "~2.3",
         "seld/jsonlint": "1.1.2",
         "illuminate/filesystem": "dev-master",
-        "phpseclib/phpseclib": "dev-php5"
+        "phpseclib/phpseclib": "dev-php5",
+        "monolog/monolog": "dev-master",
+        "symfony/monolog-bridge": "~2.4",
+        "symfony/event-dispatcher": "2.5.*@dev"
     },
     "require-dev": {
     	
