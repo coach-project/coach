@@ -75,16 +75,18 @@ class Coach {
 		$this->log->addInfo("Preparing Coach");
 		$this->setUpConfig();
 		$this->log->addInfo("Finished Preparing System");
+		
 	}
 	
 	private function setUpLoggers() {
 		
 		/* set up logger */
 		$this->log = new Logger('Coach');
-		$this->log->pushHandler(new StreamHandler('coach.log.txt'), Logger::DEBUG);
+		$this->log->pushHandler(new StreamHandler('coach.log'), Logger::DEBUG);
 		$this->log->pushHandler(new ConsoleHandler($this->output));
 		
 		$this->log->addDebug("Initialized Loggers");
+		
 	}
 	
 	private function setUpConfig() {

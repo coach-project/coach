@@ -54,4 +54,4 @@ box.phar
 #coach specific files
 .coach.json
 *.pem
-
+*.log
