@@ -8,7 +8,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\Output;
 use Coach\Scm\Scm;
-use Coach\Scm\Git\Git;
 use Net;
 use Crypt;
 use Illuminate;
@@ -17,6 +16,7 @@ use Illuminate\Filesystem\FileNotFoundException;
 use Monolog\Logger;
 use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 use Monolog\Handler\StreamHandler;
+use Coach\Scm\Adapter\Git\GitAdapter;
 
 /* set default timezone to utc */
 date_default_timezone_set("UTC");
@@ -46,6 +46,10 @@ class Coach {
 	public function install() {
 		
 		$this->prepareSystem();
+		
+		$scm = new Scm($this->config['repository']);
+		
+		$this->output->writeln($scm->cloneRepository());
 
 		/*$ssh = new \Net_SSH2($this->config['nodes'][0]['address']);
 		$key = new \Crypt_RSA();
