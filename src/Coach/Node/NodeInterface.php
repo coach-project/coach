@@ -2,8 +2,8 @@
 
 namespace Coach\Node;
 
-interface Node {
+interface NodeInterface {
 	
-	
+	public function executeCommand();
 	
 }

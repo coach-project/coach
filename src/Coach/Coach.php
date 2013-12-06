@@ -78,6 +78,7 @@ class Coach {
 	
 		$this->log->addInfo("Preparing Coach");
 		$this->setUpConfig();
+		$this->setUpNodes();
 		$this->log->addInfo("Finished Preparing System");
 		
 	}
@@ -110,6 +111,12 @@ class Coach {
 		
 		$this->log->addDebug("Configured Coach Successfully");
 
+	}
+	
+	private function setUpNodes() {
+		foreach($this->config['nodes'] as $node) {
+			//array_push($this->nodes, new Node
+		}
 	}
 	
 }
