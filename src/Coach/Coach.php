@@ -17,6 +17,7 @@ use Monolog\Logger;
 use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 use Monolog\Handler\StreamHandler;
 use Coach\Scm\Adapter\Git\GitAdapter;
+use Coach\Node\Node;
 
 /* set default timezone to utc */
 date_default_timezone_set("UTC");
@@ -31,6 +32,7 @@ class Coach {
 
 	public function __construct(OutputInterface $output) {
 		$this->output = $output;
+		$this->nodes = array();
 	}
 	
 	public function getVersion() {
@@ -115,8 +117,11 @@ class Coach {
 	
 	private function setUpNodes() {
 		foreach($this->config['nodes'] as $node) {
-			//array_push($this->nodes, new Node
+			array_push($this->nodes, new Node($node));
+			
 		}
+		
+		$this->output->writeln(var_dump($this->nodes[0]->executeCommand("ASD")));
 	}
 	
 }

@@ -4,6 +4,6 @@ namespace Coach\Node;
 
 interface NodeInterface {
 	
-	public function executeCommand();
+	public function executeCommand($command);
 	
 }
