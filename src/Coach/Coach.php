@@ -49,9 +49,14 @@ class Coach {
 		
 		$this->prepareSystem();
 		
-		$scm = new Scm($this->config['repository']);
+		/*
+		  
+	 	$scm = new Scm($this->config['repository']);
+	 	$this->output->writeln($scm->cloneRepository());
+	 	
+		 */
 		
-		$this->output->writeln($scm->cloneRepository());
+		
 
 		/*$ssh = new \Net_SSH2($this->config['nodes'][0]['address']);
 		$key = new \Crypt_RSA();
@@ -108,15 +113,20 @@ class Coach {
 			throw new CoachException("Coach Failed. Please refer to logs for more details.");
 		}
 		
+		$this->logger->addDebug("Handing Logger over to Config");
+		
+		$this->config->set('logger', $this->logger);
+		
 		$this->logger->addDebug("Configured Coach Successfully");
 
 	}
 	
 	private function setUpNodes() {
 
-		foreach($this->config['nodes'] as $node) {
+		foreach($this->config->get('nodes') as $node) {
 			$new_node = new Node($node);
 			$new_node->setLogger($this->logger);
+			$new_node->setRepo(new Scm($this->config->get('repository')));
 			array_push($this->nodes, $new_node);
 		}
 		

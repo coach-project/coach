@@ -5,6 +5,8 @@ namespace Coach\Node\Adapter\Remote;
 use Coach\Node\NodeInterface;
 use Coach\Exception\CoachException;
 use Illuminate\Filesystem\Filesystem;
+use Coach\Scm\ScmInterface;
+use Monolog\Logger;
 
 class Remote implements NodeInterface {
 	
@@ -25,8 +27,12 @@ class Remote implements NodeInterface {
 		$this->setUpShell();
 	}
 	
-	public function setLogger($logger) {
+	public function setLogger(Logger $logger) {
 		$this->logger = $logger;
+	}
+	
+	public function setRepo(ScmInterface $repo) {
+		$this->repo = $repo;
 	}
 	
 	public function executeCommand($command) {
