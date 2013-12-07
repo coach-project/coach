@@ -8,7 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 use Coach\Scm\ScmInterface;
 use Monolog\Logger;
 
-class Remote implements NodeInterface {
+class RemoteAdapter implements NodeInterface {
 	
 	private $address;
 	private $port;

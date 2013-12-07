@@ -12,7 +12,9 @@ class Node implements NodeInterface {
 	
 	function __construct($config) {
 		if($config['type'] == "remote") {
-			$this->setAdapter(new Remote($config));
+			$this->setAdapter(new RemoteAdapter($config));
+		} elseif($config['type'] == "local") {
+			$this->setAdapter(new LocalAdapter($config));
 		}
 	}
 	
