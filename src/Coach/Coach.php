@@ -18,6 +18,7 @@ use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 use Monolog\Handler\StreamHandler;
 use Coach\Scm\Adapter\Git\GitAdapter;
 use Coach\Node\Node;
+use Coach\Config\Config;
 
 /* set default timezone to utc */
 date_default_timezone_set("UTC");
@@ -98,11 +99,10 @@ class Coach {
 	private function setUpConfig() {
 
 		$this->logger->addDebug("Configuring Coach");
-		
 		/* get config file */
 		$fs = new Filesystem;
 		try {
-			$this->config = json_decode($fs->get('.coach.json'), true);
+			$this->config = new Config(json_decode($fs->get('.coach.json'), true));
 		} catch (FileNotFoundException $e) {
 			$this->logger->addCritical($e->getMessage());
 			throw new CoachException("Coach Failed. Please refer to logs for more details.");
