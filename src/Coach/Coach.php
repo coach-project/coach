@@ -25,10 +25,7 @@ date_default_timezone_set("UTC");
 
 class Coach {
 	
-	private $config;
-	private $output;
-	private $nodes;
-	private $logger;
+	private $config, $output, $nodes, $logger;
 
 	public function __construct(OutputInterface $output) {
 		$this->output = $output;
@@ -49,40 +46,12 @@ class Coach {
 		
 		$this->prepareSystem();
 		
-		/*
-		  
-	 	$scm = new Scm($this->config['repository']);
-	 	$this->output->writeln($scm->cloneRepository());
-	 	
-		 */
-		
-		
-
-		/*$ssh = new \Net_SSH2($this->config['nodes'][0]['address']);
-		$key = new \Crypt_RSA();
-		$fs = new Filesystem();
-		$key->loadKey($fs->get($this->config['nodes'][0]['key']));
-		$this->output->writeln($ssh->getLog());
-		
-		if (!$ssh->login($this->config['nodes'][0]['username'], $key)) { //if you can't log on...
-			$this->output->writeln('<error>Login Failed</error>');
-		}
-		
-		$this->output->writeln($ssh->getLog());
-		
-		$this->output->writeln($ssh->exec("cd " . $this->config["install-dir"]));
-		$this->output->writeln($ssh->getLog());
-				
-		$this->output->writeln($ssh->exec("ls -al"));
-		$this->output->writeln($ssh->getLog());*/
-		
 	}
 
 	/* load configuration adn set up all variables etc. like server settings, git repos etc */
 	private function prepareSystem() {
 	
 		$this->setUpLoggers();
-	
 		$this->logger->addInfo("Preparing Coach");
 		$this->setUpConfig();
 		$this->setUpNodes();
@@ -133,3 +102,31 @@ class Coach {
 	}
 	
 }
+
+
+/*
+
+$scm = new Scm($this->config['repository']);
+$this->output->writeln($scm->cloneRepository());
+ 
+*/
+
+
+
+/*$ssh = new \Net_SSH2($this->config['nodes'][0]['address']);
+ $key = new \Crypt_RSA();
+$fs = new Filesystem();
+$key->loadKey($fs->get($this->config['nodes'][0]['key']));
+$this->output->writeln($ssh->getLog());
+
+if (!$ssh->login($this->config['nodes'][0]['username'], $key)) { //if you can't log on...
+$this->output->writeln('<error>Login Failed</error>');
+}
+
+$this->output->writeln($ssh->getLog());
+
+$this->output->writeln($ssh->exec("cd " . $this->config["install-dir"]));
+$this->output->writeln($ssh->getLog());
+
+$this->output->writeln($ssh->exec("ls -al"));
+$this->output->writeln($ssh->getLog());*/

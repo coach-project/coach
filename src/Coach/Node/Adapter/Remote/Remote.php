@@ -23,8 +23,6 @@ class Remote implements NodeInterface {
 		foreach($config as $k => $v) {
 			$this->$k = $v;
 		}
-		
-		$this->setUpShell();
 	}
 	
 	public function setLogger(Logger $logger) {
@@ -46,12 +44,10 @@ class Remote implements NodeInterface {
 		$key->loadKey($fs->get($this->key));
 		
 		
-		if (!$ssh->login($this->username, $key)) { //if you can't log on...
+		if (!$ssh->login($this->username, $key)) {
 			throw CoachException("Cant Login");
 		}
 		
 		$this->shell = $ssh;
-		
-		//$this->logger->addInfo("Logged In");
 	}
 }
