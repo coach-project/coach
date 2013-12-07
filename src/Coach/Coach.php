@@ -26,9 +26,8 @@ class Coach {
 	
 	private $config;
 	private $output;
-	private $ssh;
 	private $nodes;
-	private $log;
+	private $logger;
 
 	public function __construct(OutputInterface $output) {
 		$this->output = $output;
@@ -78,46 +77,49 @@ class Coach {
 	
 		$this->setUpLoggers();
 	
-		$this->log->addInfo("Preparing Coach");
+		$this->logger->addInfo("Preparing Coach");
 		$this->setUpConfig();
 		$this->setUpNodes();
-		$this->log->addInfo("Finished Preparing System");
+		$this->logger->addInfo("Finished Preparing System");
 		
 	}
 	
 	private function setUpLoggers() {
 		
 		/* set up logger */
-		$this->log = new Logger('Coach');
-		$this->log->pushHandler(new StreamHandler('coach.log'), Logger::DEBUG);
-		$this->log->pushHandler(new ConsoleHandler($this->output));
+		$this->logger = new Logger('Coach');
+		$this->logger->pushHandler(new StreamHandler('coach.log'), Logger::DEBUG);
+		$this->logger->pushHandler(new ConsoleHandler($this->output));
 		
-		$this->log->addDebug("Initialized Loggers");
+		$this->logger->addDebug("Initialized Loggers");
 		
 	}
 	
 	private function setUpConfig() {
 
-		$this->log->addDebug("Configuring Coach");
+		$this->logger->addDebug("Configuring Coach");
 		
 		/* get config file */
 		$fs = new Filesystem;
 		try {
 			$this->config = json_decode($fs->get('.coach.json'), true);
 		} catch (FileNotFoundException $e) {
-			$this->log->addCritical($e->getMessage());
+			$this->logger->addCritical($e->getMessage());
 			throw new CoachException("Coach Failed. Please refer to logs for more details.");
 		}
 		
-		$this->log->addDebug("Configured Coach Successfully");
+		$this->logger->addDebug("Configured Coach Successfully");
 
 	}
 	
 	private function setUpNodes() {
 
 		foreach($this->config['nodes'] as $node) {
-			array_push($this->nodes, new Node($node));
+			$new_node = new Node($node);
+			$new_node->setLogger($this->logger);
+			array_push($this->nodes, $new_node);
 		}
+		
 	}
 	
 }
