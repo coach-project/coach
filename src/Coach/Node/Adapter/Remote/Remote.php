@@ -13,6 +13,7 @@ class Remote implements NodeInterface {
 	private $key;
 	private $username;
 	private $password;
+	private $logger;
 	
 	private $shell;
 	
@@ -24,8 +25,12 @@ class Remote implements NodeInterface {
 		$this->setUpShell();
 	}
 	
+	public function setLogger($logger) {
+		$this->logger = $logger;
+	}
+	
 	public function executeCommand($command) {
-		
+		$this->shell->exec($command);
 	}
 	
 	private function setUpShell() {
@@ -39,5 +44,8 @@ class Remote implements NodeInterface {
 			throw CoachException("Cant Login");
 		}
 		
+		$this->shell = $ssh;
+		
+		//$this->logger->addInfo("Logged In");
 	}
 }

@@ -22,4 +22,7 @@ class Node implements NodeInterface {
 		return $this->adapter->executeCommand($command);
 	}
 	
+	public function setLogger($logger) {
+		$this->adapter->setLogger($logger);
+	}
 }

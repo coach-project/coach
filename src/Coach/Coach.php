@@ -109,19 +109,15 @@ class Coach {
 			throw new CoachException("Coach Failed. Please refer to logs for more details.");
 		}
 		
-		$this->servers = $this->config['nodes'];
-		
 		$this->log->addDebug("Configured Coach Successfully");
 
 	}
 	
 	private function setUpNodes() {
+
 		foreach($this->config['nodes'] as $node) {
 			array_push($this->nodes, new Node($node));
-			
 		}
-		
-		$this->output->writeln(var_dump($this->nodes[0]->executeCommand("ASD")));
 	}
 	
 }
