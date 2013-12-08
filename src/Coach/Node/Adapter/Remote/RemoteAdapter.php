@@ -36,6 +36,9 @@ class RemoteAdapter implements NodeInterface {
 	public function executeCommand($command) {
 		$this->shell->exec($command);
 	}
+	public function deploy () {
+		
+	}
 	
 	private function setUpShell() {
 		$ssh = new \Net_SSH2($this->address);

@@ -9,5 +9,6 @@ interface NodeInterface {
 	public function executeCommand($command);
 	public function setLogger(Logger $logger);
 	public function setRepo(ScmInterface $repo);
+	public function deploy();
 	
 }

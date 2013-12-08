@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "72f24fbad50faf51abd45ee48f048be8",
+    "hash": "b73e4696d9a93c8fe0fad51232ec1249",
     "packages": [
         {
             "name": "illuminate/filesystem",
@@ -60,12 +60,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "5508243ec9a8746ce84fe3db47e232e95c46fc0d"
+                "reference": "6abf849a8d5ad5fd75d0ed50d355b44f07bde2d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/5508243ec9a8746ce84fe3db47e232e95c46fc0d",
-                "reference": "5508243ec9a8746ce84fe3db47e232e95c46fc0d",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/6abf849a8d5ad5fd75d0ed50d355b44f07bde2d3",
+                "reference": "6abf849a8d5ad5fd75d0ed50d355b44f07bde2d3",
                 "shasum": ""
             },
             "require": {
@@ -102,7 +102,7 @@
                     "role": "Developer"
                 }
             ],
-            "time": "2013-12-04 22:53:01"
+            "time": "2013-12-07 17:39:29"
         },
         {
             "name": "monolog/monolog",
@@ -177,12 +177,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "9dd34025e1ad57109fccbf8f34114dfee094f3c1"
+                "reference": "452d3dc359a2c232b1aabf84f6f3b8a18cc980e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/9dd34025e1ad57109fccbf8f34114dfee094f3c1",
-                "reference": "9dd34025e1ad57109fccbf8f34114dfee094f3c1",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/452d3dc359a2c232b1aabf84f6f3b8a18cc980e6",
+                "reference": "452d3dc359a2c232b1aabf84f6f3b8a18cc980e6",
                 "shasum": ""
             },
             "require": {
@@ -262,7 +262,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2013-12-03 20:39:23"
+            "time": "2013-12-06 11:20:42"
         },
         {
             "name": "psr/log",
@@ -309,16 +309,16 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.1.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/jsonlint.git",
-                "reference": "7cd4c4965e17e6e4c07f26d566619a4c76f8c672"
+                "reference": "354f9496736f87a581e5f724e5e76e66d457493e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/7cd4c4965e17e6e4c07f26d566619a4c76f8c672",
-                "reference": "7cd4c4965e17e6e4c07f26d566619a4c76f8c672",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/354f9496736f87a581e5f724e5e76e66d457493e",
+                "reference": "354f9496736f87a581e5f724e5e76e66d457493e",
                 "shasum": ""
             },
             "require": {
@@ -352,7 +352,7 @@
                 "parser",
                 "validator"
             ],
-            "time": "2013-11-04 15:41:11"
+            "time": "2013-11-11 13:15:48"
         },
         {
             "name": "symfony/console",
@@ -575,6 +575,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "seld/jsonlint": 20,
         "illuminate/filesystem": 20,
         "phpseclib/phpseclib": 20,
         "monolog/monolog": 20,

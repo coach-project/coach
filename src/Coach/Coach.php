@@ -44,12 +44,12 @@ class Coach {
 
 	public function install() {
 		
-		$this->prepareSystem();
-		
+		$this->prepareCoach();
+		$this->deploy();
 	}
 
-	/* load configuration adn set up all variables etc. like server settings, git repos etc */
-	private function prepareSystem() {
+	/* load configuration and set up all variables etc. like server settings, git repos etc */
+	private function prepareCoach() {
 	
 		$this->setUpLoggers();
 		$this->logger->addInfo("Preparing Coach");
@@ -73,10 +73,11 @@ class Coach {
 	private function setUpConfig() {
 
 		$this->logger->addDebug("Configuring Coach");
+		
 		/* get config file */
 		$fs = new Filesystem;
 		try {
-			$this->config = new Config(json_decode($fs->get('.coach.json'), true));
+			$this->config = new Config($fs->get('.coach.json'), $this->logger);
 		} catch (FileNotFoundException $e) {
 			$this->logger->addCritical($e->getMessage());
 			throw new CoachException("Coach Failed. Please refer to logs for more details.");
@@ -99,6 +100,12 @@ class Coach {
 			array_push($this->nodes, $new_node);
 		}
 		
+	}
+	
+	private function deploy() {
+		foreach($this->nodes as $node) {
+			$node->deploy();
+		}
 	}
 	
 }

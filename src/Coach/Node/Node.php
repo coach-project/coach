@@ -5,6 +5,7 @@ namespace Coach\Node;
 use Coach\Node\Adapter\Remote\Remote;
 use Monolog\Logger;
 use Coach\Scm\ScmInterface;
+use Coach\Node\Adapter\Local\LocalAdapter;
 
 class Node implements NodeInterface {
 	
@@ -32,5 +33,9 @@ class Node implements NodeInterface {
 	
 	public function setRepo(ScmInterface $repo) {
 		$this->adapter->setRepo($repo);
+	}
+	
+	public function deploy () {
+		$this->adapter->deploy();
 	}
 }

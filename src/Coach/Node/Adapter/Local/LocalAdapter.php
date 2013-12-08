@@ -37,7 +37,13 @@ class LocalAdapter implements NodeInterface {
 		$this->exec($command);
 	}
 	
+	public function deploy () {
+		exec($this->repo->cloneRepository());
+	}
+	
 	private function setUpShell() {
 		/* nothing to do here right now */
 	}
+	
+	
 }
