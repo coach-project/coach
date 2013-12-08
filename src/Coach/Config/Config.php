@@ -7,14 +7,10 @@ class Config implements ConfigInterface {
 	
 	private $settings;
 	private $parser;
-	
-	private $logger;
-	
 
-	function __construct($config, $logger) {
+	function __construct($config) {
 		$this->settings = array();
 		$this->parser = new JsonParser();
-		$this->logger = $logger;
 		$this->parse($config);
 	}
 	

@@ -2,7 +2,7 @@
 
 namespace Coach\Node;
 
-use Coach\Node\Adapter\Remote\Remote;
+use Coach\Node\Adapter\Remote\RemoteAdapter;
 use Monolog\Logger;
 use Coach\Scm\ScmInterface;
 use Coach\Node\Adapter\Local\LocalAdapter;

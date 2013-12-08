@@ -10,14 +10,7 @@ use Monolog\Logger;
 
 class LocalAdapter implements NodeInterface {
 	
-	private $address;
-	private $port;
-	private $key;
-	private $username;
-	private $password;
-	private $logger;
-	
-	private $shell;
+	private $repo, $logger, $shell;
 	
 	function __construct($config) {
 		foreach($config as $k => $v) {

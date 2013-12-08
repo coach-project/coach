@@ -77,7 +77,7 @@ class Coach {
 		/* get config file */
 		$fs = new Filesystem;
 		try {
-			$this->config = new Config($fs->get('.coach.json'), $this->logger);
+			$this->config = new Config($fs->get('.coach.json'));
 		} catch (FileNotFoundException $e) {
 			$this->logger->addCritical($e->getMessage());
 			throw new CoachException("Coach Failed. Please refer to logs for more details.");
@@ -94,16 +94,21 @@ class Coach {
 	private function setUpNodes() {
 
 		foreach($this->config->get('nodes') as $node) {
+
+			$node['identifier'] = "node" . (count($this->nodes) + 1); 
 			$new_node = new Node($node);
+			
 			$new_node->setLogger($this->logger);
 			$new_node->setRepo(new Scm($this->config->get('repository')));
-			array_push($this->nodes, $new_node);
+			
+			$this->nodes[] = $new_node;
+			
 		}
 		
 	}
 	
 	private function deploy() {
-		foreach($this->nodes as $node) {
+		foreach($this->nodes as $key => $node) {
 			$node->deploy();
 		}
 	}

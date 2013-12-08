@@ -17,6 +17,10 @@ class Scm implements ScmInterface {
 		$this->adapter = $adapter;
 	}
 	
+	public function isAvailable() {
+		return $this->adapter->isAvailable();
+	}
+	
 	public function cloneRepository() {
 		return $this->adapter->cloneRepository();
 	}
