@@ -13,10 +13,11 @@ class RemoteAdapter implements NodeInterface {
 	private $credentials;
 	private $logger;
 	private $repo;
-	
 	private $shell;
+	private $canDeploy;
+	private $identifier;
 	
-	private $canDeplay;
+	private $username, $hostname;
 	
 	function __construct($config) {
 
@@ -24,7 +25,7 @@ class RemoteAdapter implements NodeInterface {
 			$this->$k = $v;
 		}
 		
-		$this->canDeploy = false;
+		$this->canDeploy = true;
 		
 	}
 	
@@ -39,26 +40,52 @@ class RemoteAdapter implements NodeInterface {
 	public function executeCommand($command) {
 		return $this->shell->exec($command);
 	}
+	
+	public function getIdentifier() {
+		return $this->identifier;
+	}
+	
+	public function canDeploy() {
+		return $this->canDeploy;
+	}
+	
+	public function prepare() {
+		if(!$this->setUpShell()) {
+			$this->logger->addCritical("Cant access node. Make sure the node is available. Please check logs for detials");
+			return false;
+		}
+
+		$this->username = trim($this->executeCommand("whoami") , '\n\r
+');
+		$this->hostname = trim($this->executeCommand("hostname") , '\n\r
+');
+		$this->logger->addInfo("Running as " . $this->username . '@' . $this->hostname, array( $this->identifier ));
+
+		if($this->executeCommand($this->repo->isBinaryAvailable()) == "") {
+			$this->logger->addCritical("SCM binary not found! Please make sure scm is available", array( $this->identifier ));
+			return false;
+		}
+	}
+	
 	public function deploy () {
 		
-		$this->setUpShell();
-		
-		/* check for scm */
-		$this->logger->addInfo("Running as " . trim($this->executeCommand("whoami") , '\n\r'), array( $this->identifier ));
-		if($this->executeCommand(($this->repo->isAvailable()) == "")) {
-			$this->logger->addCritical("No SCM found on the node. Please make sure scm is available");
-			return;
+		if($this->canDeploy === false) {
+			$this->logger->addCritical("Can't Deploy on this node. Please refer to logs", array($this->identifier));
+			return false;
 		}
 		
-		/*$this->logger->addInfo("Deploying Git", array( $this->identifier ));
-		$this->logger->addInfo("whoami" . $this->executeCommand("whoami"), array( $this->identifier ));
-		$this->logger->addInfo($this->executeCommand($this->repo->cloneRepository($this->target)), array( $this->identifier ));*/
+		$this->logger->addInfo("Deploying Git", array( $this->identifier ));
+		
+		/* check dir and create one if not exists */
+		$this->logger->addInfo($this->executeCommand('pwd'));
+		$this->logger->addInfo($this->executeCommand($this->repo->cloneRepository("~/coach/")), array( $this->identifier ));
 		
 		
+
 	}
 	
 	private function setUpShell() {
-		
+
 		$ssh = new \Net_SSH2($this->credentials['address']);
 		
 		if(isset($this->credentials['key'])) {
@@ -67,20 +94,20 @@ class RemoteAdapter implements NodeInterface {
 			$key->loadKey($fs->get($this->key));
 			if (!$ssh->login($this->credentials['username'], $key)) {
 				$this->logger->addCritical("Cannot login.", array($this->identifier));
-				$this->canDeplay = false;
-				return;
+				return false;
 			}	
 		} elseif(isset($this->credentials['password'])) {
 			if (!$ssh->login($this->credentials['username'], $this->credentials['password'])) {
 				$this->logger->addCritical("Cannot login.", array($this->identifier));
-				$this->canDeplay = false;
-				return;
+				return false;
 			}
 		} else {
 			$this->logger->addCritical("Credentials not found.", array($this->identifier));
 		}
-		
+
 		$ssh->disableQuietMode();
 		$this->shell = $ssh;
+		return true;
 	}
+	
 }

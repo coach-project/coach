@@ -52,10 +52,10 @@ class Coach {
 	private function prepareCoach() {
 	
 		$this->setUpLoggers();
-		$this->logger->addInfo("Preparing Coach");
+		$this->logger->addInfo("Preparing Coach for Deployment");
 		$this->setUpConfig();
 		$this->setUpNodes();
-		$this->logger->addInfo("Finished Preparing System");
+		$this->logger->addDebug("Finished Preparing System");
 		
 	}
 	
@@ -66,13 +66,13 @@ class Coach {
 		$this->logger->pushHandler(new StreamHandler('coach.log'), Logger::DEBUG);
 		$this->logger->pushHandler(new ConsoleHandler($this->output));
 		
-		$this->logger->addDebug("Initialized Loggers");
+		$this->logger->addDebug("Initialized Loggers", array("Coach"));
 		
 	}
 	
 	private function setUpConfig() {
 
-		$this->logger->addDebug("Configuring Coach");
+		$this->logger->addDebug("Configuring Coach", array("Coach"));
 		
 		/* get config file */
 		$fs = new Filesystem;
@@ -80,6 +80,7 @@ class Coach {
 			$this->config = new Config($fs->get('.coach.json'));
 		} catch (FileNotFoundException $e) {
 			$this->logger->addCritical($e->getMessage());
+			$this->logger->addError($message, array("Coach"));
 			throw new CoachException("Coach Failed. Please refer to logs for more details.");
 		}
 		
@@ -93,22 +94,37 @@ class Coach {
 	
 	private function setUpNodes() {
 
+		$this->logger->addDebug("Configuring Nodes for Deployment", array("Coach"));
+		
 		foreach($this->config->get('nodes') as $node) {
 
 			$node['identifier'] = "node" . (count($this->nodes) + 1); 
 			$new_node = new Node($node);
-			
+			$this->logger->addDebug("Setting Up Logger on " . $node['identifier'], array("Coach"));
 			$new_node->setLogger($this->logger);
+			$this->logger->addDebug("Setting Up Repository on " . $node['identifier'], array("Coach"));
 			$new_node->setRepo(new Scm($this->config->get('repository')));
+			
+			$this->logger->addDebug("Preparing node: " . $node['identifier'], array("Coach"));
+			$new_node->prepare();
 			
 			$this->nodes[] = $new_node;
 			
 		}
 		
+		$this->logger->addDebug("Nodes Configured", array("Coach"));
+		
 	}
 	
 	private function deploy() {
-		foreach($this->nodes as $key => $node) {
+		foreach($this->nodes as $node) {
+			//$this->output->writeln(var_dump($node->getIdentifier()));
+			if(!$node->canDeploy()) {
+				//$this->logger->addCritical("Node failed! Aborting Deployment", array('Coach', $node->getIdentifier()));
+				//return false;
+			} else {
+				//$node->deploy();
+			}
 			$node->deploy();
 		}
 	}

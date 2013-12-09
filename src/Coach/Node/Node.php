@@ -38,4 +38,16 @@ class Node implements NodeInterface {
 	public function deploy () {
 		$this->adapter->deploy();
 	}
+	
+	public function prepare() {
+		$this->adapter->prepare();
+	}
+	
+	public function canDeploy() {
+		$this->adapter->canDeploy();
+	}
+	
+	public function getIdentifier() {
+		$this->adapter->getIdentifier();
+	}
 }

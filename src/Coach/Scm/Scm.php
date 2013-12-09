@@ -13,16 +13,16 @@ class Scm implements ScmInterface {
 		}
 	}
 	
+	public function isBinaryAvailable() {
+		return $this->adapter->isBinaryAvailable();
+	}
+	
 	public function setAdapter(ScmInterface $adapter) {
 		$this->adapter = $adapter;
 	}
 	
-	public function isAvailable() {
-		return $this->adapter->isAvailable();
-	}
-	
-	public function cloneRepository() {
-		return $this->adapter->cloneRepository();
+	public function cloneRepository($path = null) {
+		return $this->adapter->cloneRepository($path);
 	}
 	
 	public function checkout() {
