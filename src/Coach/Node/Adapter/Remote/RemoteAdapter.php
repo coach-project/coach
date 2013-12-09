@@ -76,12 +76,12 @@ class RemoteAdapter implements NodeInterface {
 		
 		$this->logger->addInfo("Deploying Git", array( $this->identifier ));
 		
+		$releaseTimestamp = time();
+		
 		/* check dir and create one if not exists */
-		$this->logger->addInfo($this->executeCommand('pwd'));
-		$this->logger->addInfo($this->executeCommand($this->repo->cloneRepository("~/coach/")), array( $this->identifier ));
+		$this->logger->addInfo($this->executeCommand($this->repo->cloneRepository("~/coach/apps/" . $this->repo->getSlug() . "/releases/" . $releaseTimestamp )), array( $this->identifier ));
+		$this->logger->addInfo($this->executeCommand("ln -s ~/coach/apps/" . $this->repo->getSlug() . "/releases/" . $releaseTimestamp . "/* current/" ));
 		
-		
-
 	}
 	
 	private function setUpShell() {

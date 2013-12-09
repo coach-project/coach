@@ -17,6 +17,10 @@ class Scm implements ScmInterface {
 		return $this->adapter->isBinaryAvailable();
 	}
 	
+	public function getSlug() {
+		return $this->adapter->getSlug();
+	}
+	
 	public function setAdapter(ScmInterface $adapter) {
 		$this->adapter = $adapter;
 	}
