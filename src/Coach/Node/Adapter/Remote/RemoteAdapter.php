@@ -7,6 +7,8 @@ use Coach\Exception\CoachException;
 use Illuminate\Filesystem\Filesystem;
 use Coach\Scm\ScmInterface;
 use Monolog\Logger;
+use Net_SSH2;
+use Crypt_RSA;
 
 class RemoteAdapter implements NodeInterface {
 	
@@ -18,6 +20,8 @@ class RemoteAdapter implements NodeInterface {
 	private $identifier;
 	
 	private $username, $hostname;
+	
+	private $deployPath;
 	
 	function __construct($config) {
 
@@ -76,20 +80,27 @@ class RemoteAdapter implements NodeInterface {
 		
 		$this->logger->addInfo("Deploying Git", array( $this->identifier ));
 		
+		$this->deployPath = "~/coach/apps/".$this->repo->getSlug();
 		$releaseTimestamp = time();
 		
 		/* check dir and create one if not exists */
-		$this->logger->addInfo($this->executeCommand($this->repo->cloneRepository("~/coach/apps/" . $this->repo->getSlug() . "/releases/" . $releaseTimestamp )), array( $this->identifier ));
-		$this->logger->addInfo($this->executeCommand("ln -s ~/coach/apps/" . $this->repo->getSlug() . "/releases/" . $releaseTimestamp . "/* current/" ));
+		
+		$this->logger->addInfo($this->executeCommand("mkdir -p " . $this->deployPath . "/releases"));
+		$this->logger->addInfo($this->executeCommand("mkdir -p " . $this->deployPath . "/etc"));
+		
+		
+		$this->logger->addInfo($this->executeCommand($this->repo->cloneRepository($this->deployPath. "/releases/" . $releaseTimestamp )), array( $this->identifier ));
+		$this->logger->addInfo($this->executeCommand("rm -rf ". $this->deployPath . "/current && ln -sf ~/coach/apps/" . $this->repo->getSlug() . "/releases/" . $releaseTimestamp . " ~/coach/apps/" . $this->repo->getSlug() . "/current" ));
+		$this->logger->addInfo($this->executeCommand("echo \"".$releaseTimestamp."\" > " . $this->deployPath . "/etc/CURRENTRELEASE"));
 		
 	}
 	
 	private function setUpShell() {
 
-		$ssh = new \Net_SSH2($this->credentials['address']);
+		$ssh = new Net_SSH2($this->credentials['address']);
 		
 		if(isset($this->credentials['key'])) {
-			$key = new \Crypt_RSA();
+			$key = new Crypt_RSA();
 			$fs = new Filesystem();
 			$key->loadKey($fs->get($this->key));
 			if (!$ssh->login($this->credentials['username'], $key)) {
