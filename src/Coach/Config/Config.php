@@ -36,7 +36,13 @@ class Config implements ConfigInterface {
 		foreach(json_decode($config, true) as $key => $value) {
 			$this->$key = $value;
 		}
-				
+		
+		foreach($this->nodes as $k => $node) {
+			if(!isset($node['deployTo'])) {
+				$node['deployTo'] = $this->deployTo;
+				$this->nodes[$k] = $node;
+			}
+		}
+		
 	}
-	
 }
