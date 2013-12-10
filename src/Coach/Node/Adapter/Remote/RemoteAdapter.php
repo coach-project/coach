@@ -21,7 +21,7 @@ class RemoteAdapter implements NodeInterface {
 	
 	private $username, $hostname;
 	
-	private $deployPath;
+	private $deployTo;
 	
 	function __construct($config) {
 
@@ -59,12 +59,6 @@ class RemoteAdapter implements NodeInterface {
 			return false;
 		}
 
-		$this->username = trim($this->executeCommand("whoami") , '\n\r
-');
-		$this->hostname = trim($this->executeCommand("hostname") , '\n\r
-');
-		$this->logger->addInfo("Running as " . $this->username . '@' . $this->hostname, array( $this->identifier ));
-
 		if($this->executeCommand($this->repo->isBinaryAvailable()) == "") {
 			$this->logger->addCritical("SCM binary not found! Please make sure scm is available", array( $this->identifier ));
 			return false;
@@ -79,19 +73,17 @@ class RemoteAdapter implements NodeInterface {
 		}
 		
 		$this->logger->addInfo("Deploying Git", array( $this->identifier ));
-		
-		$this->deployPath = "~/coach/apps/".$this->repo->getSlug();
+
 		$releaseTimestamp = time();
 		
 		/* check dir and create one if not exists */
 		
-		$this->logger->addInfo($this->executeCommand("mkdir -p " . $this->deployPath . "/releases"));
-		$this->logger->addInfo($this->executeCommand("mkdir -p " . $this->deployPath . "/etc"));
-		
-		
-		$this->logger->addInfo($this->executeCommand($this->repo->cloneRepository($this->deployPath. "/releases/" . $releaseTimestamp )), array( $this->identifier ));
-		$this->logger->addInfo($this->executeCommand("rm -rf ". $this->deployPath . "/current && ln -sf ~/coach/apps/" . $this->repo->getSlug() . "/releases/" . $releaseTimestamp . " ~/coach/apps/" . $this->repo->getSlug() . "/current" ));
-		$this->logger->addInfo($this->executeCommand("echo \"".$releaseTimestamp."\" > " . $this->deployPath . "/etc/CURRENTRELEASE"));
+		$this->logger->addInfo($this->executeCommand("mkdir -p " . $this->deployTo . "releases"));
+		$this->logger->addInfo($this->executeCommand("mkdir -p " . $this->deployTo . "etc"));
+
+		$this->logger->addInfo($this->executeCommand($this->repo->cloneRepository($this->deployTo . "releases/" . $releaseTimestamp )), array( $this->identifier ));
+		$this->logger->addInfo($this->executeCommand("rm -rf ". $this->deployTo . "current && ln -sf " . $this->deployTo . "releases/" . $releaseTimestamp . " " . $this->deployTo . "current" ));
+		$this->logger->addInfo($this->executeCommand("echo \"".$releaseTimestamp."\" > " . $this->deployTo . "etc/CURRENTRELEASE"));
 		
 	}
 	
