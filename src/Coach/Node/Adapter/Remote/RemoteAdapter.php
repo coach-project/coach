@@ -19,6 +19,8 @@ class RemoteAdapter implements NodeInterface {
 	private $canDeploy;
 	private $identifier;
 	
+	private $prompt;
+	
 	private $username, $hostname;
 	
 	private $deployTo;
@@ -42,7 +44,9 @@ class RemoteAdapter implements NodeInterface {
 	}
 	
 	public function executeCommand($command) {
-		return $this->shell->exec($command);
+		
+		$this->shell->write($command);
+		return $this->shell->read($this->prompt);
 	}
 	
 	public function getIdentifier() {
@@ -82,6 +86,7 @@ class RemoteAdapter implements NodeInterface {
 		$this->logger->addInfo($this->executeCommand("mkdir -p " . $this->deployTo . "etc"));
 
 		$this->logger->addInfo($this->executeCommand($this->repo->cloneRepository($this->deployTo . "releases/" . $releaseTimestamp )), array( $this->identifier ));
+		$this->logger->addInfo($this->shell->getLog());
 		$this->logger->addInfo($this->executeCommand("rm -rf ". $this->deployTo . "current && ln -sf " . $this->deployTo . "releases/" . $releaseTimestamp . " " . $this->deployTo . "current" ));
 		$this->logger->addInfo($this->executeCommand("echo \"".$releaseTimestamp."\" > " . $this->deployTo . "etc/CURRENTRELEASE"));
 		
@@ -108,8 +113,18 @@ class RemoteAdapter implements NodeInterface {
 			$this->logger->addCritical("Credentials not found.", array($this->identifier));
 		}
 
-		$ssh->disableQuietMode();
+		//$ssh->disableQuietMode();
 		$this->shell = $ssh;
+		
+		/* get prompt */
+		$this->shell->setTimeout(1);
+		$this->shell->write('\n');
+		
+		$this->logger->addInfo($this->prompt = $this->shell->read('/(nameofprompt#\s*)/i', NET_SSH2_READ_REGEX));
+		
+		$this->logger->addInfo($this->shell->read($this->prompt));
+		
+		
 		return true;
 	}
 	
