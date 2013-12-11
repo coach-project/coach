@@ -44,9 +44,19 @@ class RemoteAdapter implements NodeInterface {
 	}
 	
 	public function executeCommand($command) {
+		//$this->shell->setTimeout(10);
+	//	$this->shell->write($command . "\n");
+		//$this->shell->write($command);
+		//return $this->shell->read(''.$this->prompt);
+		//return $this->shell->read("/".$this->prompt."/", NET_SSH2_READ_REGEX);
+		//$this->logger->addInfo($this->shell->getLog());
+		//return $this->shell->read('
+//');
+	
+		$out = $this->shell->exec($command);
+		//$this->logger->addInfo(("Log: " . $this->shell->getLog()));
+		return $out;
 		
-		$this->shell->write($command);
-		return $this->shell->read($this->prompt);
 	}
 	
 	public function getIdentifier() {
@@ -118,13 +128,13 @@ class RemoteAdapter implements NodeInterface {
 		
 		/* get prompt */
 		$this->shell->setTimeout(1);
-		$this->shell->write('\n');
+		$this->prompt = $this->shell->read('/.*@.*[$|#]/', NET_SSH2_READ_REGEX);
+		$this->logger->addInfo(("Prompt: " . $this->prompt));
+		//$this->logger->addInfo($ssh->read('snake@devbox:~$'));
+		//$ssh->write("ls -la\n");
+		//$this->logger->addInfo($ssh->read('snake@devbox:~$'));
 		
-		$this->logger->addInfo($this->prompt = $this->shell->read('/(nameofprompt#\s*)/i', NET_SSH2_READ_REGEX));
-		
-		$this->logger->addInfo($this->shell->read($this->prompt));
-		
-		
+		//$this->logger->addInfo($ssh->getLog());
 		return true;
 	}
 	
