@@ -12,16 +12,6 @@
     "finder": [
         {
             "name": "*.php",
-            "exclude": [
-                "File",
-                "mikey179",
-                "Net",
-                "phpunit",
-                "phpunit-test-case",
-                "Tester",
-                "Tests",
-                "tests"
-            ],
             "in": "vendor"
         }
     ],
