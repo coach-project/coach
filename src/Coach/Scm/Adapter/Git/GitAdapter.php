@@ -21,7 +21,7 @@ class GitAdapter implements ScmInterface {
 	}
 	
 	public function cloneRepository( $path = null) {
-		return $this->binary . ' clone '. $this->url . ((!is_null($path)) ? " " . $path : "");
+		return $this->binary . ' clone '. $this->url . " -b " . $this->branch . ((!is_null($path)) ? " " . $path : "");
 	}
 	
 	public function checkout() {
