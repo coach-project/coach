@@ -12,10 +12,12 @@
     "finder": [
         {
             "name": "*.php",
+            "exclude": ["Tests"],
             "in": "vendor"
         }
     ],
-    
+    "git-commit": "commit_id",
+    "git-version": "package_version",
     "main": "bin/coach",
     "output": "coach.phar",
     "stub": true

@@ -6,10 +6,9 @@ require __DIR__.'/../vendor/autoload.php';
 use Coach\Command;
 use Symfony\Component\Console\Application;
 
-$application = new Application('Coach', 'dev');
+$application = new Application('Coach', '@package_version@ - @commit_id@');
 
 $application->add(new Command\GreetCommand());
 $application->add(new Command\LicenseCommand());
-$application->add(new Command\VersionCommand());
 $application->add(new Command\InstallCommand());
 $application->run();

@@ -19,7 +19,7 @@ class LicenseCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output) {
     	
-    	$coach = new Coach;
+    	$coach = new Coach($output);
     	$output->writeln($coach->getLicense());
 
     }

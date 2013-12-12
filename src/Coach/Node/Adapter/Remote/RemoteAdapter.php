@@ -67,6 +67,7 @@ class RemoteAdapter implements NodeInterface {
 			$this->logger->addCritical("SCM binary not found! Please make sure scm is available", array( $this->identifier ));
 			return false;
 		}
+		return true;
 	}
 	
 	public function deploy () {
@@ -93,10 +94,13 @@ class RemoteAdapter implements NodeInterface {
 	}
 	
 	private function setUpShell() {
+		
+		$this->logger->addInfo("Preparing Shell", array($this->getIdentifier()));
 
 		$ssh = new Net_SSH2($this->credentials['address']);
 		
 		if(isset($this->credentials['key'])) {
+			$this->logger->addInfo("Using Private Key", array($this->getIdentifier()));
 			$key = new Crypt_RSA();
 			$fs = new Filesystem();
 			$key->loadKey($fs->get($this->key));
@@ -105,12 +109,14 @@ class RemoteAdapter implements NodeInterface {
 				return false;
 			}	
 		} elseif(isset($this->credentials['password'])) {
+			$this->logger->addInfo("Using username and password", array($this->getIdentifier()));
 			if (!$ssh->login($this->credentials['username'], $this->credentials['password'])) {
 				$this->logger->addCritical("Cannot login.", array($this->identifier));
 				return false;
 			}
 		} else {
 			$this->logger->addCritical("Credentials not found.", array($this->identifier));
+			return false;
 		}
 
 		$this->shell = $ssh;

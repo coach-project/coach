@@ -20,7 +20,6 @@ use Coach\Scm\Adapter\Git\GitAdapter;
 use Coach\Node\Node;
 use Coach\Config\Config;
 
-/* set default timezone to utc */
 date_default_timezone_set("UTC");
 
 class Coach {
@@ -52,10 +51,10 @@ class Coach {
 	private function prepareCoach() {
 	
 		$this->setUpLoggers();
-		$this->logger->addInfo("Preparing Coach for Deployment");
+		$this->logger->addInfo("Preparing Coach for Deployment", array('Coach'));
 		$this->setUpConfig();
 		$this->setUpNodes();
-		$this->logger->addDebug("Finished Preparing System");
+		$this->logger->addDebug("Finished Preparing System", array('Coach'));
 		
 	}
 	
@@ -65,9 +64,7 @@ class Coach {
 		$this->logger = new Logger('Coach');
 		$this->logger->pushHandler(new StreamHandler('coach.log'), Logger::DEBUG);
 		$this->logger->pushHandler(new ConsoleHandler($this->output));
-		
-		$this->logger->addDebug("Initialized Loggers", array("Coach"));
-		
+
 	}
 	
 	private function setUpConfig() {
@@ -80,15 +77,14 @@ class Coach {
 			$this->config = new Config($fs->get('.coach.json'));
 		} catch (FileNotFoundException $e) {
 			$this->logger->addCritical($e->getMessage());
-			$this->logger->addError($message, array("Coach"));
 			throw new CoachException("Coach Failed. Please refer to logs for more details.");
 		}
 		
-		$this->logger->addDebug("Handing Logger over to Config");
+		$this->logger->addDebug("Handing Logger over to Config", array('Coach'));
 		
 		$this->config->set('logger', $this->logger);
 		
-		$this->logger->addDebug("Configured Coach Successfully");
+		$this->logger->addDebug("Configured Coach Successfully", array('Coach'));
 
 	}
 	
@@ -97,16 +93,20 @@ class Coach {
 		$this->logger->addDebug("Configuring Nodes for Deployment", array("Coach"));
 		
 		foreach($this->config->get('nodes') as $node) {
-
-			$node['identifier'] = "node" . (count($this->nodes) + 1); 
+			
+			$node['identifier'] = "node" . (count($this->nodes) + 1);
 			$new_node = new Node($node);
-			$this->logger->addDebug("Setting Up Logger on " . $node['identifier'], array("Coach"));
+			
+			$this->logger->addDebug("Setting Up Logger", array("Coach", $new_node->getIdentifier()));
 			$new_node->setLogger($this->logger);
-			$this->logger->addDebug("Setting Up Repository on " . $node['identifier'], array("Coach"));
+			
+			$this->logger->addDebug("Setting Up Repository", array("Coach", $new_node->getIdentifier()));
 			$new_node->setRepo(new Scm($this->config->get('repository')));
 			
-			$this->logger->addDebug("Preparing node: " . $node['identifier'], array("Coach"));
-			$new_node->prepare();
+			$this->logger->addDebug("Preparing node", array("Coach", $new_node->getIdentifier()));
+			if(!$new_node->prepare()) {
+				$this->logger->addCritical("Preparation of node failed. Please refer to logs. Aborting Deployment.", array('Coach', $new_node->getIdentifier()));
+			}
 			
 			$this->nodes[] = $new_node;
 			
@@ -118,14 +118,12 @@ class Coach {
 	
 	private function deploy() {
 		foreach($this->nodes as $node) {
-			//$this->output->writeln(var_dump($node->getIdentifier()));
 			if(!$node->canDeploy()) {
-				//$this->logger->addCritical("Node failed! Aborting Deployment", array('Coach', $node->getIdentifier()));
-				//return false;
+				$this->logger->addCritical("Node failed! Aborting Deployment", array('Coach', $node->getIdentifier()));
+				return false;
 			} else {
-				//$node->deploy();
+				$node->deploy();
 			}
-			$node->deploy();
 		}
 	}
 	
